@@ -12,8 +12,10 @@ The tutorial can be found at https://docs.dagster.io/tutorial
 ## Setup
 ```
 git clone https://github.com/jpolkdata/dagster_demo
-cd dagster_demo
-python3 /venv/bin/activate
+cd dagster_demo/my-dagster-project/
+python3 -m venv venv
+. venv/bin/activate
+python3 -m pip install -r requirements.txt
 ```
 
 ## Materializing the Assets
@@ -35,5 +37,7 @@ dagit -f complex_asset_graph.py
 ```
 ![image](https://user-images.githubusercontent.com/40530465/204061961-a42918c1-d1c2-4b0e-9187-48995d2c2aef.png)
 
-
-
+A couple of unit tests have been added to that last graph, you can run them using this command
+```
+pytest test_complex_asset_graph.py
+```
