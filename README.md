@@ -41,3 +41,30 @@ A couple of unit tests have been added to that last graph, you can run them usin
 ```
 pytest test_complex_asset_graph.py
 ```
+
+## Adding ops and jobs
+ops are individual units of computation that can be wired together to form jobs
+
+In hello.py we have craeted a single job. All this does is calculate the sizes of all the files in our current directory and logs them. You can run this using 
+```
+dagit -f hello.py
+```
+![image](https://user-images.githubusercontent.com/40530465/204115076-380eb2b7-a751-468a-8aa1-448ab8bc8818.png)
+
+So then we created a slightly more involved example. This time we wired together a couple of ops, one to get the file sizes but also a different op to report on the combined total size of all of those files. This is run as a serial job because the "total" file sizes op relies on the op that calculates the individual file sizes. To view the job in Dagster run
+```
+dagit -f serial_job.py
+```
+![image](https://user-images.githubusercontent.com/40530465/204115066-68d0bdbe-1f6b-4117-998f-88956b4bf6a9.png)
+
+
+Then we created a complex example. This builds on the previous file size ops. Now we run a job that a) gets the total size of all of the files AND b) gets the size of the largest individual file. We can visualize this in Dagster using:
+```
+dagit -f complex_job.py
+```
+![image](https://user-images.githubusercontent.com/40530465/204115096-6ff49933-b51b-451e-971d-d9c7ffa8ec22.png)
+
+Finally, we build out a couple of unit tests for that complex job. We want to test that the op that calculates the total file sizes is doing an accurate calculation. We also want to be sure that the job runs successfully and brings back a resulting file size that is greater than zero. We can run those test using:
+```
+pytest test_complex_job.py
+```
